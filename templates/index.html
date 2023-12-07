@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente Virtual UCB</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        #question-input {
+            width: 400px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #answer {
+            display: none;
+        }
+        #answer-display {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #0066cc;
+        }
+        #submit-btn {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Asistente Virtual UCB</h1>
+    
+    <form method="post" action="/ask">
+        <label for="question-input">Realiza tu pregunta:</label>
+        <input type="text" id="question-input" name="question" placeholder="Escribe tu pregunta aquí">
+
+        <button id="submit-btn" type="submit">Enviar</button>
+    </form>
+
+    <div id="answer">
+        {% if answer %}
+            {{ answer }}
+        {% endif %}
+    </div>
+
+    <div id="answer-display"></div>
+
+    <script>
+        const answerElement = document.getElementById('answer');
+        const answerDisplayElement = document.getElementById('answer-display');
+
+        if (answerElement && answerElement.textContent) {
+            const answerText = answerElement.textContent;
+            let index = 0;
+            answerDisplayElement.textContent = '';
+
+            function displayAnswerLetterByLetter() {
+                if (index < answerText.length) {
+                    answerDisplayElement.textContent += answerText[index];
+                    index++;
+                    setTimeout(displayAnswerLetterByLetter, 30); // Cambia la velocidad aquí
+                }
+            }
+
+            displayAnswerLetterByLetter();
+        }
+    </script>
+</body>
+</html>
+
